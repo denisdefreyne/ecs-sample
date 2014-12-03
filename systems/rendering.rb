@@ -5,7 +5,7 @@ class RenderingSystem < System
     @asset_manager = asset_manager
   end
 
-  def draw(entities)
+  def draw(entities, _window)
     entities.each do |entity|
       image = entity[Image]
       position = entity[Position]

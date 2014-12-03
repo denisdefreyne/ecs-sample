@@ -14,6 +14,6 @@ class Window < Gosu::Window
   end
 
   def draw
-    @systems.each { |s| s.draw(@entities) }
+    @systems.each { |s| s.draw(@entities, self) }
   end
 end

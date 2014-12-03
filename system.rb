@@ -8,6 +8,6 @@ class System
   def update_entity(entity, _window)
   end
 
-  def draw(entities)
+  def draw(entities, _window)
   end
 end
