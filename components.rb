@@ -27,3 +27,5 @@ end
 Image = Struct.new(:filename)
 
 Input = Class.new
+
+CollisionBox = Struct.new(:width, :height)

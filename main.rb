@@ -23,7 +23,8 @@ entities << Entity.new(
   Position.new(400, 200),
   Velocity.new(1, 1),
   Image.new('assets/spaceship.png'),
-  Input.new)
+  Input.new,
+  CollisionBox.new(110, 110))
 
 systems << MovementSystem.new
 systems << RenderingSystem.new(asset_manager)
