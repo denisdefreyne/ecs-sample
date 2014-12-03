@@ -5,22 +5,22 @@ class BounceSystem < System
     return unless entity[Position]
     return unless entity[Velocity]
 
-    aabb = aabb_for(entity)
-    return if aabb.nil?
+    raabb = raabb_for(entity)
+    return if raabb.nil?
 
-    if aabb.left < 0
+    if raabb.left < 0
       entity[Velocity].x = entity[Velocity].x.abs
     end
 
-    if aabb.right > window.width
+    if raabb.right > window.width
       entity[Velocity].x = - entity[Velocity].x.abs
     end
 
-    if aabb.top < 0
+    if raabb.top < 0
       entity[Velocity].y = entity[Velocity].y.abs
     end
 
-    if aabb.bottom > window.height
+    if raabb.bottom > window.height
       entity[Velocity].y = - entity[Velocity].y.abs
     end
   end
@@ -28,24 +28,26 @@ class BounceSystem < System
   def draw(entities, window)
     entities.each do |entity|
       aabb = aabb_for(entity)
-      next if aabb.nil?
+      raabb = raabb_for(entity)
+      next if aabb.nil? || raabb.nil?
 
+      # raabb
       color = Gosu::Color::GREEN
       window.draw_line(
-        aabb.left, aabb.top, color,
-        aabb.left, aabb.bottom, color
+        raabb.left, raabb.top, color,
+        raabb.left, raabb.bottom, color
       )
       window.draw_line(
-        aabb.right, aabb.top, color,
-        aabb.right, aabb.bottom, color
+        raabb.right, raabb.top, color,
+        raabb.right, raabb.bottom, color
       )
       window.draw_line(
-        aabb.left, aabb.top, color,
-        aabb.right, aabb.top, color
+        raabb.left, raabb.top, color,
+        raabb.right, raabb.top, color
       )
       window.draw_line(
-        aabb.left, aabb.bottom, color,
-        aabb.right, aabb.bottom, color
+        raabb.left, raabb.bottom, color,
+        raabb.right, raabb.bottom, color
       )
     end
   end
@@ -73,18 +75,23 @@ class BounceSystem < System
   end
 
   def aabb_for(entity)
-    return nil unless entity[CollisionBox]
+    Rect.new(
+      entity[Position].y - entity[CollisionBox].height / 2,
+      entity[Position].x + entity[CollisionBox].width / 2,
+      entity[Position].y + entity[CollisionBox].height / 2,
+      entity[Position].x - entity[CollisionBox].width / 2,
+    )
+  end
 
-    top    = entity[Position].y - entity[CollisionBox].height / 2
-    right  = entity[Position].x + entity[CollisionBox].width / 2
-    bottom = entity[Position].y + entity[CollisionBox].height / 2
-    left   = entity[Position].x - entity[CollisionBox].width / 2
+  def raabb_for(entity)
+    aabb = aabb_for(entity)
+    return nil if aabb.nil?
 
     points = [
-      Point.new(left,  top),
-      Point.new(right, top),
-      Point.new(right, bottom),
-      Point.new(left,  bottom),
+      Point.new(aabb.left,  aabb.top),
+      Point.new(aabb.right, aabb.top),
+      Point.new(aabb.right, aabb.bottom),
+      Point.new(aabb.left,  aabb.bottom),
     ]
 
     if entity[Rotation]
