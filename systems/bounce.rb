@@ -1,6 +1,8 @@
 # encoding: utf-8
 
 class BounceSystem < System
+  ENABLE_DEBUG_DRAWING = false
+
   def update_entity(entity, window)
     return unless entity[Position]
     return unless entity[Velocity]
@@ -26,10 +28,42 @@ class BounceSystem < System
   end
 
   def draw(entities, window)
+    return unless ENABLE_DEBUG_DRAWING
+
     entities.each do |entity|
       aabb = aabb_for(entity)
       raabb = raabb_for(entity)
       next if aabb.nil? || raabb.nil?
+
+      # aabb rotated
+      points = [
+        Point.new(aabb.left,  aabb.top),
+        Point.new(aabb.right, aabb.top),
+        Point.new(aabb.right, aabb.bottom),
+        Point.new(aabb.left,  aabb.bottom),
+      ]
+      if entity[Rotation]
+        points.map! do |point|
+          rotate_point(point, entity[Position], entity[Rotation].rad)
+        end
+      end
+      color = Gosu::Color::YELLOW
+      window.draw_line(
+        points[0].x, points[0].y, color,
+        points[1].x, points[1].y, color
+      )
+      window.draw_line(
+        points[1].x, points[1].y, color,
+        points[2].x, points[2].y, color
+      )
+      window.draw_line(
+        points[2].x, points[2].y, color,
+        points[3].x, points[3].y, color
+      )
+      window.draw_line(
+        points[3].x, points[3].y, color,
+        points[0].x, points[0].y, color
+      )
 
       # raabb
       color = Gosu::Color::GREEN
@@ -81,9 +115,6 @@ class BounceSystem < System
       entity[Position].y + entity[CollisionBox].height / 2,
       entity[Position].x - entity[CollisionBox].width / 2,
     )
-  end
-
-  def aabbr_for(entity)
   end
 
   def rotate_point(point, center, rad)
