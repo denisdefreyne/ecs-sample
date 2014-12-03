@@ -16,9 +16,8 @@ class InputSystem < System
     # Accelerate
     entity.add(Acceleration.new(0, 0))
     if window.button_down?(Gosu::KbUp)
-      factor = Math::PI * 2 / 360.0
-      entity[Acceleration].x = 0.3 * Math.cos(entity[Rotation].deg * factor)
-      entity[Acceleration].y = 0.3 * Math.sin(entity[Rotation].deg * factor)
+      entity[Acceleration].x = 0.3 * Math.cos(entity[Rotation].rad)
+      entity[Acceleration].y = 0.3 * Math.sin(entity[Rotation].rad)
     end
 
     # Slow down

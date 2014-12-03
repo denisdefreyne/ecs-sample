@@ -18,7 +18,11 @@ end
 
 Acceleration = Struct.new(:x, :y)
 
-Rotation = Struct.new(:deg)
+Rotation = Struct.new(:deg) do
+  def rad
+  	self.deg * Math::PI * 2 / 360.0
+  end
+end
 
 Image = Struct.new(:filename)
 
