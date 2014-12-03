@@ -83,6 +83,21 @@ class BounceSystem < System
     )
   end
 
+  def aabbr_for(entity)
+  end
+
+  def rotate_point(px, py, cx, cy, rad)
+    rx =
+      Math.cos(rad) * (px - cx) -
+      Math.sin(rad) * (py - cy) + cx
+
+    ry =
+      Math.sin(rad) * (px - cx) +
+      Math.cos(rad) * (py - cy) + cy
+
+    Point.new(rx, ry)
+  end
+
   def raabb_for(entity)
     aabb = aabb_for(entity)
     return nil if aabb.nil?
@@ -98,14 +113,7 @@ class BounceSystem < System
       center = entity[Position]
       rad = entity[Rotation].rad
       points.map! do |point|
-        rotated_x =
-          Math.cos(rad) * (point.x - center.x) -
-          Math.sin(rad) * (point.y - center.y) + center.x
-        rotated_y =
-          Math.sin(rad) * (point.x - center.x) +
-          Math.cos(rad) * (point.y - center.y) + center.y
-
-        Point.new(rotated_x, rotated_y)
+        rotate_point(point.x, point.y, center.x, center.y, rad)
       end
     end
 
