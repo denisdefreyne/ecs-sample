@@ -5,8 +5,7 @@ class System
     entities.each { |e| update_entity(e, window) }
   end
 
-  def update_entity(entity, window)
-    raise NotImplementedError, '#update_entity'
+  def update_entity(entity, _window)
   end
 
   def draw(entities)

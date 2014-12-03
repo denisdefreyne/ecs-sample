@@ -22,7 +22,4 @@ Rotation = Struct.new(:rad)
 
 Image = Struct.new(:filename)
 
-# TODO: Use asset manager
-ImageInst = Struct.new(:image)
-
 Input = Class.new
