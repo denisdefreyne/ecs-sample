@@ -14,15 +14,16 @@ require_relative 'window'
 
 entities = []
 systems = []
+
 window = Window.new(800, 600, 'Spaaaace', entities, systems)
+
+asset_manager = AssetManager.new(window)
 
 entities << Entity.new(
   Position.new(400, 200),
   Velocity.new(1, 1),
   Image.new('assets/spaceship.png'),
   Input.new)
-
-asset_manager = AssetManager.new(window)
 
 systems << MovementSystem.new
 systems << RenderingSystem.new(asset_manager)

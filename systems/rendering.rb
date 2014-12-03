@@ -14,9 +14,9 @@ class RenderingSystem < System
       next if image.nil?
       next if position.nil?
 
-      rad = rotation ? rotation.rad : 0
+      deg = rotation ? rotation.deg : 0
       @asset_manager.image_at(image.filename)
-        .draw_rot(position.x, position.y, 0, rad)
+        .draw_rot(position.x, position.y, 0, deg)
     end
   end
 end

@@ -18,7 +18,7 @@ end
 
 Acceleration = Struct.new(:x, :y)
 
-Rotation = Struct.new(:rad)
+Rotation = Struct.new(:deg)
 
 Image = Struct.new(:filename)
 
