@@ -4,11 +4,11 @@ class Entity
   def initialize(*components)
     @components = {}
 
-    components.each { |c| self.add(c) }
+    components.each { |c| add(c) }
   end
 
   def [](klass)
-     @components[klass]
+    @components[klass]
   end
 
   def []=(klass, component)

@@ -5,9 +5,9 @@ class System
     entities.each { |e| update_entity(e, window) }
   end
 
-  def update_entity(entity, _window)
+  def update_entity(_entity, _window)
   end
 
-  def draw(entities, _window)
+  def draw(_entities, _window)
   end
 end
